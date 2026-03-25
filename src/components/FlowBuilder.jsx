@@ -9,10 +9,12 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { useFlowStore } from '../store/flowStore';
 import MessageNode from './MessageNode';
-import { Download, Upload, Plus } from 'lucide-react';
+import ConditionNode from './ConditionNode';
+import { Download, Upload, Plus, GitBranch } from 'lucide-react';
 
 const nodeTypes = {
   messageNode: MessageNode,
+  conditionNode: ConditionNode,
 };
 
 const FlowBuilder = () => {
@@ -28,6 +30,19 @@ const FlowBuilder = () => {
         title: 'Nueva Fase',
         messages: ['Escribe tu mensaje...'],
         metrics: { read: 0, replied: 0, appointment: 0 },
+        updateNode: useFlowStore.getState().updateNodeData
+      }
+    };
+    addNode(newNode);
+  };
+
+  const handleAddCondition = () => {
+    const newNode = {
+      id: Date.now().toString(),
+      type: 'conditionNode',
+      position: { x: Math.random() * 200 + 200, y: Math.random() * 200 + 100 },
+      data: {
+        condition: '¿Responde?',
         updateNode: useFlowStore.getState().updateNodeData
       }
     };
@@ -98,7 +113,13 @@ const FlowBuilder = () => {
               onClick={handleAddNode}
               className="px-4 py-2 bg-accent-purple/20 text-accent-purple hover:bg-accent-purple/30 rounded-xl flex items-center gap-2 text-sm font-bold border border-accent-purple/50 transition-all"
             >
-              <Plus size={16} /> Nodo
+              <Plus size={16} /> Mensaje
+            </button>
+            <button 
+              onClick={handleAddCondition}
+              className="px-4 py-2 bg-accent-yellow/20 text-accent-yellow hover:bg-accent-yellow/30 rounded-xl flex items-center gap-2 text-sm font-bold border border-accent-yellow/50 transition-all"
+            >
+              <GitBranch size={16} /> Condición
             </button>
             <div className="w-px h-8 bg-white/10 self-center"></div>
             <button 

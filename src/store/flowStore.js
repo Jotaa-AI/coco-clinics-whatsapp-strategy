@@ -21,11 +21,42 @@ const initialNodes = [
       messages: ['¡Genial! Para poder ayudarte mejor, ¿tienes disponibilidad para venir esta semana a una valoración gratuita con nuestras doctoras?'],
       metrics: { read: 90, replied: 60, appointment: 40 }
     },
+  },
+  {
+    id: 'cond1',
+    type: 'conditionNode',
+    position: { x: 290, y: 600 },
+    data: {
+      condition: '¿Agenda la cita?'
+    }
+  },
+  {
+    id: '3',
+    type: 'messageNode',
+    position: { x: 100, y: 800 },
+    data: {
+      title: 'Confirmación',
+      messages: ['Perfecto, te dejo la cita agendada para el [Día] a las [Hora].\n\nNos vemos pronto en Coco Clínics. ✨'],
+      metrics: { read: 0, replied: 0, appointment: 0 }
+    }
+  },
+  {
+    id: '4',
+    type: 'messageNode',
+    position: { x: 500, y: 800 },
+    data: {
+      title: 'Seguimiento',
+      messages: ['Entiendo, si te parece bien me guardo tu contacto y te escribo la semana que viene por si te viene mejor.\n\n¡Un saludo!'],
+      metrics: { read: 0, replied: 0, appointment: 0 }
+    }
   }
 ];
 
 const initialEdges = [
-  { id: 'e1-2', source: '1', target: '2', animated: true, style: { stroke: '#4ECDC4' } }
+  { id: 'e1-2', source: '1', target: '2', animated: true, style: { stroke: '#4ECDC4' } },
+  { id: 'e2-cond1', source: '2', target: 'cond1', animated: true, style: { stroke: '#4ECDC4' } },
+  { id: 'econd1-3', source: 'cond1', sourceHandle: 'yes', target: '3', animated: true, style: { stroke: '#95E1D3' } },
+  { id: 'econd1-4', source: 'cond1', sourceHandle: 'no', target: '4', animated: true, style: { stroke: '#F38181', strokeDasharray: '5,5' } }
 ];
 
 export const useFlowStore = create((set, get) => ({
