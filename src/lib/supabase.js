@@ -7,4 +7,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('Faltan las variables de entorno de Supabase.');
 }
 
-export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
+export const supabase = createClient(
+  supabaseUrl || 'https://tu-proyecto.supabase.co', 
+  supabaseAnonKey || 'public-anon-key'
+);
