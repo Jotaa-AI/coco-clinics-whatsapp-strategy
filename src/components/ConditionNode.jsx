@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'reactflow';
 import { GitBranch, Edit2, Check } from 'lucide-react';
+import { useFlowStore } from '../store/flowStore';
 
 const ConditionNode = ({ data, id }) => {
+  const updateNodeData = useFlowStore(state => state.updateNodeData);
   const [isEditing, setIsEditing] = useState(false);
   const [tempCondition, setTempCondition] = useState(data.condition || '¿Responde?');
 
@@ -11,7 +13,7 @@ const ConditionNode = ({ data, id }) => {
   };
 
   const saveEdit = () => {
-    data.updateNode(id, { condition: tempCondition });
+    updateNodeData(id, { condition: tempCondition });
     setIsEditing(false);
   };
 

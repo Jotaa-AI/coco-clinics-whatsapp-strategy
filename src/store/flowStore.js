@@ -254,10 +254,11 @@ const initialEdges = [
 ];
 
 let saveTimeout;
-const saveToSupabase = (nodes, edges) => {
+const saveToSupabase = () => {
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(async () => {
     try {
+      const { nodes, edges } = useFlowStore.getState();
       await supabase.from('flow_state').upsert({
         id: 'default',
         nodes,
@@ -297,19 +298,19 @@ export const useFlowStore = create((set, get) => ({
   onNodesChange: (changes) => {
     const newNodes = applyNodeChanges(changes, get().nodes);
     set({ nodes: newNodes });
-    saveToSupabase(newNodes, get().edges);
+    saveToSupabase();
   },
   
   onEdgesChange: (changes) => {
     const newEdges = applyEdgeChanges(changes, get().edges);
     set({ edges: newEdges });
-    saveToSupabase(get().nodes, newEdges);
+    saveToSupabase();
   },
   
   onConnect: (connection) => {
     const newEdges = addEdge({ ...connection, animated: true, style: { stroke: '#4ECDC4' } }, get().edges);
     set({ edges: newEdges });
-    saveToSupabase(get().nodes, newEdges);
+    saveToSupabase();
   },
   
   updateNodeData: (nodeId, data) => {
@@ -320,7 +321,7 @@ export const useFlowStore = create((set, get) => ({
       return node;
     });
     set({ nodes: newNodes });
-    saveToSupabase(newNodes, get().edges);
+    saveToSupabase();
   },
   
   addNode: (node) => {
@@ -332,7 +333,7 @@ export const useFlowStore = create((set, get) => ({
   importFlow: (flowData) => {
     if (flowData.nodes && flowData.edges) {
       set({ nodes: flowData.nodes, edges: flowData.edges });
-      saveToSupabase(flowData.nodes, flowData.edges);
+      saveToSupabase();
     }
   }
 }));

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'reactflow';
 import { MessageSquare, BarChart2, Edit2, Check, Plus, Trash2 } from 'lucide-react';
+import { useFlowStore } from '../store/flowStore';
 
 const MessageNode = ({ data, id }) => {
+  const updateNodeData = useFlowStore(state => state.updateNodeData);
   const [editingIndex, setEditingIndex] = useState(null);
   const [tempText, setTempText] = useState('');
 
@@ -14,23 +16,23 @@ const MessageNode = ({ data, id }) => {
   const saveEdit = (index) => {
     const newMessages = [...data.messages];
     newMessages[index] = tempText;
-    data.updateNode(id, { messages: newMessages });
+    updateNodeData(id, { messages: newMessages });
     setEditingIndex(null);
   };
 
   const addMessage = () => {
     const newMessages = [...(data.messages || []), 'Nuevo mensaje de Whatsapp...'];
-    data.updateNode(id, { messages: newMessages });
+    updateNodeData(id, { messages: newMessages });
   };
 
   const deleteMessage = (index) => {
     const newMessages = data.messages.filter((_, i) => i !== index);
-    data.updateNode(id, { messages: newMessages });
+    updateNodeData(id, { messages: newMessages });
   };
 
   const updateMetric = (key, value) => {
     const newMetrics = { ...data.metrics, [key]: Number(value) };
-    data.updateNode(id, { metrics: newMetrics });
+    updateNodeData(id, { metrics: newMetrics });
   };
 
   const getThemeStyles = (theme) => {

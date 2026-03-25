@@ -33,8 +33,7 @@ const FlowBuilder = () => {
       data: {
         title: 'Nueva Fase',
         messages: ['Escribe tu mensaje...'],
-        metrics: { read: 0, replied: 0, appointment: 0 },
-        updateNode: useFlowStore.getState().updateNodeData
+        metrics: { read: 0, replied: 0, appointment: 0 }
       }
     };
     addNode(newNode);
@@ -46,8 +45,7 @@ const FlowBuilder = () => {
       type: 'conditionNode',
       position: { x: Math.random() * 200 + 200, y: Math.random() * 200 + 100 },
       data: {
-        condition: '¿Responde?',
-        updateNode: useFlowStore.getState().updateNodeData
+        condition: '¿Responde?'
       }
     };
     addNode(newNode);
@@ -82,14 +80,6 @@ const FlowBuilder = () => {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  // Inject updateNodeData into existing nodes
-  const nodesWithActions = nodes.map(node => ({
-    ...node,
-    data: {
-      ...node.data,
-      updateNode: useFlowStore.getState().updateNodeData
-    }
-  }));
 
   if (isLoading) {
     return (
@@ -106,7 +96,7 @@ const FlowBuilder = () => {
     <div className="w-full h-full flex pt-16">
       <div className="flex-1 h-full relative">
         <ReactFlow
-          nodes={nodesWithActions}
+          nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
