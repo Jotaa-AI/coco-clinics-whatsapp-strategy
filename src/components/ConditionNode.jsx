@@ -20,12 +20,28 @@ const ConditionNode = ({ data, id }) => {
     // So this button is more of a placeholder, or we can add deleteNode to flowStore.
   };
 
+  const getThemeStyles = (theme) => {
+    switch(theme) {
+      case 'danger': return 'border-accent-red/60 bg-[#2a1111]/95 shadow-[0_0_15px_rgba(243,129,129,0.3)]';
+      case 'success': return 'border-accent-green/60 bg-[#112a22]/95 shadow-[0_0_15px_rgba(149,225,211,0.3)]';
+      default: return 'border-accent-yellow/50 bg-[#111128]/95';
+    }
+  };
+
+  const getIconColor = (theme) => {
+    switch(theme) {
+      case 'danger': return 'text-accent-red';
+      case 'success': return 'text-accent-green';
+      default: return 'text-accent-yellow';
+    }
+  };
+
   return (
-    <div className="glass-card w-[240px] shadow-xl border-accent-yellow/50 bg-[#111128]/95 overflow-hidden rounded-[24px]">
+    <div className={`glass-card w-[240px] shadow-xl overflow-hidden rounded-[24px] ${getThemeStyles(data.theme)}`}>
       <Handle type="target" position={Position.Top} className="!w-3 !h-3 !bg-accent-teal" />
       
-      <div className="p-4 bg-accent-yellow/10 flex flex-col items-center justify-center border-b border-accent-yellow/20 relative group">
-        <GitBranch size={24} className="text-accent-yellow mb-2" />
+      <div className={`p-4 flex flex-col items-center justify-center border-b relative group ${data.theme === 'danger' ? 'bg-accent-red/10 border-accent-red/20' : 'bg-accent-yellow/10 border-accent-yellow/20'}`}>
+        <GitBranch size={24} className={`${getIconColor(data.theme)} mb-2`} />
         
         {isEditing ? (
            <div className="flex w-full gap-2 items-center">

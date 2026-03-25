@@ -33,14 +33,34 @@ const MessageNode = ({ data, id }) => {
     data.updateNode(id, { metrics: newMetrics });
   };
 
+  const getThemeStyles = (theme) => {
+    switch(theme) {
+      case 'danger': return 'border-accent-red/50 bg-[#2a1111]/90 shadow-[0_0_15px_rgba(243,129,129,0.2)]';
+      case 'success': return 'border-accent-green/50 bg-[#112a22]/90 shadow-[0_0_15px_rgba(149,225,211,0.2)]';
+      case 'warning': return 'border-accent-yellow/50 bg-[#2a2611]/90 shadow-[0_0_15px_rgba(255,217,61,0.2)]';
+      case 'info': return 'border-accent-teal/50 bg-[#11222a]/90 shadow-[0_0_15px_rgba(78,205,196,0.2)]';
+      default: return 'border-accent-purple/30 bg-[#111128]/90';
+    }
+  };
+
+  const getHeaderColor = (theme) => {
+    switch(theme) {
+      case 'danger': return 'text-accent-red';
+      case 'success': return 'text-accent-green';
+      case 'warning': return 'text-accent-yellow';
+      case 'info': return 'text-accent-teal';
+      default: return 'text-accent-pink';
+    }
+  };
+
   return (
-    <div className="glass-card w-[320px] shadow-xl border-accent-purple/30 bg-[#111128]/90">
+    <div className={`glass-card w-[320px] shadow-xl ${getThemeStyles(data.theme)}`}>
       <Handle type="target" position={Position.Top} className="!w-3 !h-3 !bg-accent-teal" />
       
       <div className="p-4 border-b border-white/10 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <MessageSquare size={18} className="text-accent-pink" />
-          <h3 className="font-bold text-white text-sm">{data.title || 'Nueva Fhase'}</h3>
+          <MessageSquare size={18} className={getHeaderColor(data.theme)} />
+          <h3 className="font-bold text-white text-sm">{data.title || 'Nueva Fase'}</h3>
         </div>
       </div>
 
