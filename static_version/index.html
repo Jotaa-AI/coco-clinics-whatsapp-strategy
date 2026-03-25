@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coco Clínics — Estrategia WhatsApp AI Agent</title>
+    <meta name="description" content="Dashboard interactivo para la estrategia del agente de IA de WhatsApp de Coco Clínics">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Ambient background blobs -->
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">🥥</span>
+                <div class="logo-text">
+                    <h2>Coco Clínics</h2>
+                    <span class="logo-subtitle">WhatsApp Strategy</span>
+                </div>
+            </div>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#overview" class="nav-link active" data-section="overview">
+                <span class="nav-icon">📊</span> Vista General
+            </a></li>
+            <li><a href="#bienvenida" class="nav-link" data-section="bienvenida">
+                <span class="nav-icon">📩</span> Plantilla Bienvenida
+            </a></li>
+            <li><a href="#conversacion" class="nav-link" data-section="conversacion">
+                <span class="nav-icon">💬</span> Flujo Conversación
+            </a></li>
+            <li><a href="#recordatorios" class="nav-link" data-section="recordatorios">
+                <span class="nav-icon">⏰</span> Recordatorios
+            </a></li>
+            <li><a href="#seguimiento" class="nav-link" data-section="seguimiento">
+                <span class="nav-icon">🔄</span> Seguimiento
+            </a></li>
+            <li><a href="#postvisita" class="nav-link" data-section="postvisita">
+                <span class="nav-icon">🌟</span> Post-Visita
+            </a></li>
+            <li><a href="#principios" class="nav-link" data-section="principios">
+                <span class="nav-icon">🧠</span> Principios Clave
+            </a></li>
+            <li><a href="#flujo-n8n" class="nav-link" data-section="flujo-n8n">
+                <span class="nav-icon">⚙️</span> Flujo n8n
+            </a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button class="btn-export" id="btnExport" title="Exportar estrategia">
+                <span>📥</span> Exportar JSON
+            </button>
+            <button class="btn-import" id="btnImport" title="Importar estrategia">
+                <span>📤</span> Importar JSON
+            </button>
+            <input type="file" id="fileImport" accept=".json" style="display:none">
+        </div>
+    </nav>
+
+    <!-- Mobile header -->
+    <header class="mobile-header" id="mobileHeader">
+        <button class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </button>
+        <h2>🥥 Coco Clínics</h2>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+
+        <!-- SECTION: Overview -->
+        <section class="section active" id="overview">
+            <div class="section-header">
+                <h1>📊 Vista General de la Estrategia</h1>
+                <p class="section-subtitle">Dashboard del agente de IA de WhatsApp para Coco Clínics</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card" style="--accent: #6C63FF">
+                    <div class="stat-icon">📩</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Plantillas Bienvenida</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                </div>
+                <div class="stat-card" style="--accent: #FF6B9D">
+                    <div class="stat-icon">💬</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Fases Conversación</span>
+                        <span class="stat-value">4</span>
+                    </div>
+                </div>
+                <div class="stat-card" style="--accent: #4ECDC4">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Recordatorios</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                </div>
+                <div class="stat-card" style="--accent: #FFD93D">
+                    <div class="stat-icon">🔄</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Seguimientos</span>
+                        <span class="stat-value">7</span>
+                    </div>
+                </div>
+                <div class="stat-card" style="--accent: #95E1D3">
+                    <div class="stat-icon">🌟</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Post-Visita</span>
+                        <span class="stat-value">5</span>
+                    </div>
+                </div>
+                <div class="stat-card" style="--accent: #F38181">
+                    <div class="stat-icon">🧠</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Principios Clave</span>
+                        <span class="stat-value">9</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Flow Overview -->
+            <div class="glass-card flow-overview">
+                <h3>🗺️ Flujo General del Agente</h3>
+                <div class="flow-diagram">
+                    <div class="flow-step" style="--step-color: #6C63FF">
+                        <div class="flow-step-icon">1</div>
+                        <div class="flow-step-label">Lead Meta Ads</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="--step-color: #FF6B9D">
+                        <div class="flow-step-icon">2</div>
+                        <div class="flow-step-label">Bienvenida</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="--step-color: #4ECDC4">
+                        <div class="flow-step-icon">3</div>
+                        <div class="flow-step-label">Cualificación</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="--step-color: #FFD93D">
+                        <div class="flow-step-icon">4</div>
+                        <div class="flow-step-label">Agenda</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="--step-color: #95E1D3">
+                        <div class="flow-step-icon">5</div>
+                        <div class="flow-step-label">Recordatorios</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step" style="--step-color: #F38181">
+                        <div class="flow-step-icon">6</div>
+                        <div class="flow-step-label">Post-Visita</div>
+                    </div>
+                </div>
+                <div class="flow-branches">
+                    <div class="flow-branch">
+                        <span class="branch-from">Si no responde →</span>
+                        <span class="branch-to" style="color: #FFD93D">Secuencia Seguimiento (2h → 24h → 3-5d → 7-10d)</span>
+                    </div>
+                    <div class="flow-branch">
+                        <span class="branch-from">Si no agenda →</span>
+                        <span class="branch-to" style="color: #FF6B9D">Follow-up empático + Técnica "1 o 2"</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card tip-card">
+                <div class="tip-badge">💡 PRINCIPIO CLAVE</div>
+                <p><em>"Cuanto más frío está el lead, menos debes hablar de tratamientos/precios y más de conexión personal."</em></p>
+                <span class="tip-source">— Curso ClinicSkool</span>
+            </div>
+        </section>
+
+        <!-- SECTION: Bienvenida -->
+        <section class="section" id="bienvenida">
+            <div class="section-header">
+                <h1>📩 Plantilla de Bienvenida</h1>
+                <p class="section-subtitle">Optimizar la tasa de apertura del primer mensaje</p>
+            </div>
+
+            <div class="glass-card error-card">
+                <h3>❌ Error habitual</h3>
+                <p>Enviar un "tochón" de texto con información de la clínica, tratamientos y precios. <strong>El lead ve un bloque de texto → no lo abre.</strong></p>
+            </div>
+
+            <div class="glass-card tip-card">
+                <div class="tip-badge">💡 PRINCIPIO</div>
+                <p>El primer mensaje debe ser <strong>corto, personal y con una pregunta abierta</strong> (Pregunta de Conexión). NO dar información sin que la pidan → primero genera conversación.</p>
+            </div>
+
+            <h2 class="subsection-title">Plantillas</h2>
+
+            <div class="templates-grid">
+                <div class="template-card" data-key="bienvenida_a">
+                    <div class="template-header">
+                        <span class="template-badge" style="background: #6C63FF">Opción A</span>
+                        <span class="template-name">Pregunta de Conexión</span>
+                        <div class="template-actions">
+                            <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                            <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                        </div>
+                    </div>
+                    <div class="whatsapp-preview">
+                        <div class="wa-bubble" contenteditable="false">Hola {{nombre}} 👋
+
+Soy [nombre asesora] de Coco Clínics.
+
+He visto que te has interesado por nuestros tratamientos.
+
+¿Es para algo concreto que te gustaría mejorar o todavía estás explorando opciones? 😊</div>
+                    </div>
+                </div>
+
+                <div class="template-card" data-key="bienvenida_b">
+                    <div class="template-header">
+                        <span class="template-badge" style="background: #FF6B9D">Opción B</span>
+                        <span class="template-name">Hook "Resultados Naturales"</span>
+                        <div class="template-actions">
+                            <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                            <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                        </div>
+                    </div>
+                    <div class="whatsapp-preview">
+                        <div class="wa-bubble" contenteditable="false">Hola {{nombre}} 👋
+
+Soy [nombre asesora] de Coco Clínics.
+
+Vi tu interés en nuestros tratamientos de medicina estética.
+
+¿Buscas un resultado natural para algo que llevas tiempo queriendo mejorar o es algo más reciente? 🌿</div>
+                    </div>
+                </div>
+
+                <div class="template-card" data-key="bienvenida_c">
+                    <div class="template-header">
+                        <span class="template-badge" style="background: #4ECDC4">Opción C</span>
+                        <span class="template-name">Ultra-corto (Máxima apertura)</span>
+                        <div class="template-actions">
+                            <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                            <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                        </div>
+                    </div>
+                    <div class="whatsapp-preview">
+                        <div class="wa-bubble" contenteditable="false">Hola {{nombre}} 👋
+
+Vi tu solicitud. ¿Es para ti o para alguien más?</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card tip-card">
+                <div class="tip-badge">🔑 TRUCO APERTURA</div>
+                <p>El primer mensaje de la plantilla de WhatsApp solo muestra las primeras ~2 líneas en la preview. Esas 2 líneas deben generar curiosidad suficiente para abrir. Evita empezar con "Somos Coco Clínics, una clínica de..."</p>
+            </div>
+        </section>
+
+        <!-- SECTION: Conversación -->
+        <section class="section" id="conversacion">
+            <div class="section-header">
+                <h1>💬 Flujo de Conversación</h1>
+                <p class="section-subtitle">Mejorar la tasa de agendamiento de leads cualificados</p>
+            </div>
+
+            <div class="glass-card quote-card">
+                <p><em>"El problema no es que no tengan dinero. El problema es lo que les mandas."</em></p>
+                <span class="tip-source">— Curso ClinicSkool</span>
+            </div>
+
+            <div class="phases-timeline">
+                <!-- Phase 1 -->
+                <div class="phase-card" data-key="fase_1">
+                    <div class="phase-marker" style="--phase-color: #6C63FF">
+                        <span>1</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-header">
+                            <h3>Fase 1: Conexión</h3>
+                            <span class="phase-goal">Objetivo: Que el lead responda</span>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">Hola {{nombre}} 👋 Soy [nombre] de Coco Clínics.
+¿Es para algo concreto que te gustaría mejorar o todavía estás explorando opciones?</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="phase-card" data-key="fase_2">
+                    <div class="phase-marker" style="--phase-color: #FF6B9D">
+                        <span>2</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-header">
+                            <h3>Fase 2: Cualificación</h3>
+                            <span class="phase-goal">Objetivo: Identificar motivo válido para valoración</span>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">¡Genial! Me encanta que quieras [lo que ha mencionado].
+¿Llevas tiempo pensándolo o es algo que has notado más recientemente?</div>
+                        </div>
+                        <div class="whatsapp-preview" style="margin-top: 10px">
+                            <div class="wa-bubble" contenteditable="false">Perfecto. En Coco Clínics lo primero que hacemos es una valoración gratuita y sin compromiso con nuestra doctora para ver si eres buena candidata y qué opciones se adaptan mejor a ti. ¿Te gustaría que te buscara un hueco esta semana?</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="phase-card" data-key="fase_3">
+                    <div class="phase-marker" style="--phase-color: #4ECDC4">
+                        <span>3</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-header">
+                            <h3>Fase 3: Agenda</h3>
+                            <span class="phase-goal">Objetivo: Cerrar la cita</span>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">Tenemos disponibilidad el [día 1] a las [hora] o el [día 2] a las [hora]. ¿Cuál te viene mejor?</div>
+                        </div>
+                        <div class="whatsapp-preview sub-variant" style="margin-top: 10px">
+                            <span class="variant-label">Si duda del precio:</span>
+                            <div class="wa-bubble" contenteditable="false">Entiendo 😊 La valoración es totalmente gratuita. Es simplemente para que la doctora valore tu caso, te explique opciones y tú decidas sin presión. ¿Qué día te iría mejor?</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4 -->
+                <div class="phase-card" data-key="fase_4">
+                    <div class="phase-marker" style="--phase-color: #FFD93D">
+                        <span>4</span>
+                    </div>
+                    <div class="phase-content">
+                        <div class="phase-header">
+                            <h3>Fase 4: Confirmación</h3>
+                            <span class="phase-goal">Objetivo: Confirmar la cita</span>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">¡Perfecto! 🎉 Quedas agendada:
+📅 [Día], [Fecha] a las [Hora]
+📍 Coco Clínics — [dirección]
+
+Te enviaré un recordatorio el día antes.
+¿Tienes alguna duda antes de tu cita?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rules table -->
+            <div class="glass-card rules-card">
+                <h3>📏 Reglas para el Agente IA</h3>
+                <div class="rules-grid">
+                    <div class="rule-item">
+                        <span class="rule-icon">🚫</span>
+                        <div>
+                            <strong>Nunca dar precios directamente</strong>
+                            <p>Siempre redirigir a la valoración gratuita</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">✂️</span>
+                        <div>
+                            <strong>No enviar "tochones"</strong>
+                            <p>Máximo 3-4 líneas por mensaje</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">❓</span>
+                        <div>
+                            <strong>Preguntar antes de informar</strong>
+                            <p>Primero entender qué busca, después ofrecer</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">🌿</span>
+                        <div>
+                            <strong>Hook "resultado natural"</strong>
+                            <p>Mayor driver de conversión en estética</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">1️⃣</span>
+                        <div>
+                            <strong>Técnica del "1 o 2"</strong>
+                            <p>Simplificar la respuesta del lead al máximo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: Recordatorios -->
+        <section class="section" id="recordatorios">
+            <div class="section-header">
+                <h1>⏰ Mensajes de Recordatorio</h1>
+                <p class="section-subtitle">Reducir la tasa de no-shows</p>
+            </div>
+
+            <div class="timeline-container">
+                <!-- Reminder 1 -->
+                <div class="timeline-item" data-key="recordatorio_24h">
+                    <div class="timeline-marker">
+                        <span class="timeline-time">-24h</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>📌 Recordatorio 1</h3>
+                            <span class="template-name">24 horas antes</span>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">Hola {{nombre}} 😊
+
+Te recuerdo que mañana tienes tu valoración gratuita en Coco Clínics:
+
+📅 [Día, Fecha] a las [Hora]
+📍 [Dirección]
+
+¿Nos vemos mañana? ✅</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reminder 2 -->
+                <div class="timeline-item" data-key="recordatorio_2h">
+                    <div class="timeline-marker">
+                        <span class="timeline-time">-2h</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>📌 Recordatorio 2</h3>
+                            <span class="template-name">2 horas antes</span>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">¡Hola {{nombre}}! 👋
+
+Te esperamos hoy a las [Hora] en Coco Clínics.
+¿Todo bien para venir? 😊</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- If no confirm -->
+                <div class="timeline-item timeline-branch" data-key="recordatorio_no_confirma">
+                    <div class="timeline-marker warning">
+                        <span class="timeline-time">⚠️</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>🔀 Si no confirma el recordatorio de 24h</h3>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">{{nombre}}, ¿sigue en pie lo de mañana?
+Dime un 1 si vienes o un 2 si necesitas cambiar el día 🙏</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card tip-card">
+                <div class="tip-badge">🔑 TÉCNICA "1 o 2"</div>
+                <p>Pedir una respuesta tan simple como un número elimina la fricción. El lead no tiene que redactar nada. Esto <strong>aumenta drásticamente la tasa de confirmación</strong>.</p>
+            </div>
+
+            <!-- Frequency table -->
+            <div class="glass-card">
+                <h3>📅 Frecuencia Óptima</h3>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Momento</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Tras agendar</td><td>Confirmación con detalles</td></tr>
+                        <tr><td>-24h</td><td>Recordatorio + confirmación</td></tr>
+                        <tr><td>-2h</td><td>Recordatorio final breve</td></tr>
+                        <tr><td>Si no confirma</td><td>Técnica "1 o 2"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION: Seguimiento -->
+        <section class="section" id="seguimiento">
+            <div class="section-header">
+                <h1>🔄 Seguimiento (No agenda / No responde)</h1>
+                <p class="section-subtitle">Recuperar leads que no responden o no agendan</p>
+            </div>
+
+            <div class="glass-card quote-card">
+                <p><em>"Los leads que no responden no están perdidos. Son una mina de oro porque ya te conocen."</em></p>
+                <span class="tip-source">— Curso ClinicSkool</span>
+            </div>
+
+            <h2 class="subsection-title">Secuencia de seguimiento (No responde)</h2>
+
+            <div class="timeline-container follow-up">
+                <div class="timeline-item" data-key="seguimiento_2h">
+                    <div class="timeline-marker"><span class="timeline-time">2-4h</span></div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>Seguimiento suave</h3>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">{{nombre}}, por si no te llegó bien mi mensaje anterior...
+¿Tienes un minutito? Solo quería saber si puedo ayudarte 😊</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-key="seguimiento_24h">
+                    <div class="timeline-marker"><span class="timeline-time">24h</span></div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>Técnica "1 o 2"</h3>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">Hola {{nombre}}, no quiero ser pesada 😅
+Solo quería asegurarme de que viste mi mensaje.
+¿Te interesa que te cuente cómo es la valoración gratuita?
+Dime un 1 si sí, un 2 si ahora no es buen momento 🙏</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-key="seguimiento_3d">
+                    <div class="timeline-marker"><span class="timeline-time">3-5d</span></div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>Mensaje empático</h3>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">{{nombre}}, pensé en ti hoy 😊
+Si en algún momento quieres retomar lo de la valoración, solo dime y te busco un hueco. Sin prisa ✨</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-key="seguimiento_7d">
+                    <div class="timeline-marker"><span class="timeline-time">7-10d</span></div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>Último contacto</h3>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">Hola {{nombre}}, ¿cómo estás?
+No te voy a escribir más para no molestarte, pero quería que supieras que si algún día decides dar el paso, aquí me tienes. ¡Un abrazo! 💛
+
+PD: Si quieres que te avise cuando haya promociones o novedades, dime un "sí" y te apunto 😊</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="subsection-title">Leads que preguntaron precio y desaparecieron</h2>
+
+            <div class="templates-grid">
+                <div class="template-card" data-key="precio_desaparecio">
+                    <div class="template-header">
+                        <span class="template-badge" style="background: #FF6B9D">Reenganche</span>
+                        <div class="template-actions">
+                            <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                            <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                        </div>
+                    </div>
+                    <div class="whatsapp-preview">
+                        <div class="wa-bubble" contenteditable="false">Hola {{nombre}}, ¿cómo estás?
+Me quedé con ganas de ayudarte con lo que me comentaste.
+¿Es algo que sigue interesándote o has encontrado otra solución?</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="subsection-title">Presupuestos enviados sin respuesta</h2>
+
+            <div class="templates-grid triple">
+                <div class="template-card" data-key="presupuesto_72h">
+                    <div class="template-header">
+                        <span class="template-badge" style="background: #6C63FF">&lt; 72h</span>
+                        <span class="template-name">Regla del "1 o 2"</span>
+                        <div class="template-actions">
+                            <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                            <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                        </div>
+                    </div>
+                    <div class="whatsapp-preview">
+                        <div class="wa-bubble" contenteditable="false">{{nombre}}, no hace falta que me respondas un testamento 😊
+Solo dime con un 1 si todavía te interesa o con un 2 si prefieres dejarlo para más adelante.</div>
+                    </div>
+                </div>
+
+                <div class="template-card" data-key="presupuesto_economico">
+                    <div class="template-header">
+                        <span class="template-badge" style="background: #FFD93D; color: #1a1a2e">Freno económico</span>
+                        <div class="template-actions">
+                            <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                            <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                        </div>
+                    </div>
+                    <div class="whatsapp-preview">
+                        <div class="wa-bubble" contenteditable="false">{{nombre}}, entiendo que estos tratamientos requieren pensarlo bien. Si lo que te frena es el momento económico, tenemos opciones de pago fraccionado que igual no te comenté bien. ¿Te cuento?</div>
+                    </div>
+                </div>
+
+                <div class="template-card" data-key="presupuesto_reactivacion">
+                    <div class="template-header">
+                        <span class="template-badge" style="background: #95E1D3; color: #1a1a2e">Reactivación</span>
+                        <span class="template-name">Semanas/meses después</span>
+                        <div class="template-actions">
+                            <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                            <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                        </div>
+                    </div>
+                    <div class="whatsapp-preview">
+                        <div class="wa-bubble" contenteditable="false">{{nombre}}, esta semana tuve un caso muy parecido al tuyo y pensé en ti. ¿Cómo estás llevando lo de [problema concreto]?</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: Post-visita -->
+        <section class="section" id="postvisita">
+            <div class="section-header">
+                <h1>🌟 Seguimiento Post-Visita</h1>
+                <p class="section-subtitle">Fidelización y reactivación de pacientes</p>
+            </div>
+
+            <div class="glass-card quote-card">
+                <p><em>"No te escribo para ofrecerte nada. Solo para darte las gracias."</em></p>
+                <span class="tip-source">— Curso ClinicSkool</span>
+            </div>
+
+            <div class="timeline-container post-visit">
+                <div class="timeline-item" data-key="post_24h">
+                    <div class="timeline-marker"><span class="timeline-time">24-48h</span></div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>Check-up inicial</h3>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">Hola {{nombre}} 😊
+¿Cómo estás después de tu visita en Coco Clínics?
+Quería asegurarme de que todo va bien.
+¿Alguna duda sobre lo que comentamos? 💛</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-key="post_2sem">
+                    <div class="timeline-marker"><span class="timeline-time">1-2 sem</span></div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>Seguimiento resultados</h3>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">{{nombre}}, ¿cómo vas con los resultados?
+Me encantaría saber cómo te estás viendo.
+Si notas cualquier cosa que te preocupe, me dices ☺️</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-key="post_3meses">
+                    <div class="timeline-marker"><span class="timeline-time">1-3 mes</span></div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>Soft touch</h3>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">Hola {{nombre}}, pensé en ti hoy sin motivo especial.
+¿Cómo estás? ¿Cómo va todo con [tratamiento que se hizo]? 😊</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-key="post_6meses">
+                    <div class="timeline-marker"><span class="timeline-time">3-6 mes</span></div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>Hook de novedad</h3>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">{{nombre}}, pensé en ti esta semana.
+Acabamos de incorporar algo nuevo para [su zona de interés] que creo que te puede interesar mucho. ¿Te cuento? ✨</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-key="post_6mas">
+                    <div class="timeline-marker"><span class="timeline-time">6+ mes</span></div>
+                    <div class="timeline-content">
+                        <div class="template-header">
+                            <h3>Gratitud pura</h3>
+                            <div class="template-actions">
+                                <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                                <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                            </div>
+                        </div>
+                        <div class="whatsapp-preview">
+                            <div class="wa-bubble" contenteditable="false">Hola {{nombre}}, no te escribo para ofrecerte nada.
+Solo quería darte las gracias por haber confiado en Coco Clínics. Si algún día quieres retomar, aquí estamos 💛</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="subsection-title">Reactivación masiva de pacientes</h2>
+
+            <div class="template-card wide" data-key="reactivacion_masiva">
+                <div class="template-header">
+                    <span class="template-badge" style="background: linear-gradient(135deg, #6C63FF, #FF6B9D)">🚀 Campaña masiva</span>
+                    <span class="template-name">Prioridad + Escasez</span>
+                    <div class="template-actions">
+                        <button class="btn-edit" title="Editar"><span>✏️</span></button>
+                        <button class="btn-copy" title="Copiar"><span>📋</span></button>
+                    </div>
+                </div>
+                <div class="whatsapp-preview">
+                    <div class="wa-bubble" contenteditable="false">Hola {{nombre}}, ¿cómo estás?
+Te escribo porque acabamos de abrir la agenda para [mes] y como ya has venido a la clínica, queríamos darte prioridad para que no te quedes sin tu hueco.
+¿Te gustaría que te buscara un hueco para [tratamiento]?</div>
+                </div>
+            </div>
+
+            <div class="glass-card tip-card">
+                <div class="tip-badge">🔑 PALANCA PSICOLÓGICA</div>
+                <p>Dar al paciente la sensación de <strong>exclusividad</strong> ("te damos prioridad") activa urgencia sin ser agresivo.</p>
+            </div>
+        </section>
+
+        <!-- SECTION: Principios -->
+        <section class="section" id="principios">
+            <div class="section-header">
+                <h1>🧠 Principios Clave</h1>
+                <p class="section-subtitle">Fundamentos extraídos de los cursos ClinicSkool</p>
+            </div>
+
+            <div class="principles-grid">
+                <div class="principle-card" style="--p-color: #6C63FF">
+                    <div class="principle-icon">❓</div>
+                    <h3>Pregunta de Conexión</h3>
+                    <p>Siempre abrir con pregunta, nunca con información. El primer mensaje solo busca una respuesta.</p>
+                </div>
+                <div class="principle-card" style="--p-color: #FF6B9D">
+                    <div class="principle-icon">1️⃣</div>
+                    <h3>Regla del "1 o 2"</h3>
+                    <p>Simplificar la respuesta al máximo para leads fríos. Un número es menos fricción que un texto.</p>
+                </div>
+                <div class="principle-card" style="--p-color: #4ECDC4">
+                    <div class="principle-icon">🌿</div>
+                    <h3>"Resultado Natural"</h3>
+                    <p>El hook con mayor conversión en estética médica. Mencionar resultados naturales activa confianza.</p>
+                </div>
+                <div class="principle-card" style="--p-color: #FFD93D">
+                    <div class="principle-icon">👩‍⚕️</div>
+                    <h3>Filtro de "Candidata"</h3>
+                    <p>Posiciona a la clínica como autoridad, no como vendedora. "¿Eres buena candidata?" > "¿Quieres una cita?"</p>
+                </div>
+                <div class="principle-card" style="--p-color: #F38181">
+                    <div class="principle-icon">✂️</div>
+                    <h3>No enviar "tochones"</h3>
+                    <p>Mensajes cortos (3-4 líneas máx.) = más respuestas. Cada línea extra reduce la tasa de apertura.</p>
+                </div>
+                <div class="principle-card" style="--p-color: #95E1D3">
+                    <div class="principle-icon">🙏</div>
+                    <h3>Gratitud > Venta</h3>
+                    <p>En reactivación, agradecer funciona mejor que vender. Baja la guardia del paciente.</p>
+                </div>
+                <div class="principle-card" style="--p-color: #AA96DA">
+                    <div class="principle-icon">📸</div>
+                    <h3>Confianza Transferida</h3>
+                    <p>Usar antes/después de casos similares como prueba social. La evidencia visual vende más que las palabras.</p>
+                </div>
+                <div class="principle-card" style="--p-color: #C9B1FF">
+                    <div class="principle-icon">📅</div>
+                    <h3>Timing Inteligente</h3>
+                    <p>Nunca contactar en días de mucho ruido (Navidad exacta, etc.). Día 1-2 de enero > 25 de diciembre.</p>
+                </div>
+                <div class="principle-card" style="--p-color: #FCBAD3">
+                    <div class="principle-icon">⚡</div>
+                    <h3>Prioridad y Escasez</h3>
+                    <p>"Te damos prioridad" activa urgencia sin presión. Funciona especialmente bien en reactivación masiva.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: Flujo n8n -->
+        <section class="section" id="flujo-n8n">
+            <div class="section-header">
+                <h1>⚙️ Configuración n8n</h1>
+                <p class="section-subtitle">Nodos y flujo recomendado para el agente</p>
+            </div>
+
+            <div class="glass-card">
+                <h3>🗺️ Diagrama de Flujo del Agente</h3>
+                <div class="n8n-flow">
+                    <div class="n8n-node trigger">
+                        <span class="n8n-label">Lead Meta Ads</span>
+                    </div>
+                    <div class="n8n-connector"></div>
+                    <div class="n8n-node action">
+                        <span class="n8n-label">Plantilla Bienvenida</span>
+                    </div>
+                    <div class="n8n-branch-container">
+                        <div class="n8n-branch yes">
+                            <span class="n8n-branch-label">✅ Responde</span>
+                            <div class="n8n-connector"></div>
+                            <div class="n8n-node action">
+                                <span class="n8n-label">Conexión</span>
+                            </div>
+                            <div class="n8n-connector"></div>
+                            <div class="n8n-node action">
+                                <span class="n8n-label">Cualificación</span>
+                            </div>
+                            <div class="n8n-connector"></div>
+                            <div class="n8n-node decision">
+                                <span class="n8n-label">¿Agenda?</span>
+                            </div>
+                            <div class="n8n-sub-branches">
+                                <div class="n8n-sub-branch">
+                                    <span class="n8n-branch-label yes-label">Sí</span>
+                                    <div class="n8n-node success">
+                                        <span class="n8n-label">Confirmación</span>
+                                    </div>
+                                    <div class="n8n-connector"></div>
+                                    <div class="n8n-node action">
+                                        <span class="n8n-label">Recordatorios</span>
+                                    </div>
+                                    <div class="n8n-connector"></div>
+                                    <div class="n8n-node success">
+                                        <span class="n8n-label">Post-Visita</span>
+                                    </div>
+                                </div>
+                                <div class="n8n-sub-branch">
+                                    <span class="n8n-branch-label no-label">No</span>
+                                    <div class="n8n-node warning">
+                                        <span class="n8n-label">Seguimiento</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="n8n-branch no">
+                            <span class="n8n-branch-label">❌ No responde</span>
+                            <div class="n8n-connector"></div>
+                            <div class="n8n-steps-compact">
+                                <div class="n8n-mini-node">2-4h: Suave</div>
+                                <div class="n8n-mini-node">24h: "1 o 2"</div>
+                                <div class="n8n-mini-node">3-5d: Empático</div>
+                                <div class="n8n-mini-node">7-10d: Último</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h3>📋 Nodos recomendados para n8n</h3>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Nodo</th>
+                            <th>Trigger</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Welcome</strong></td><td>Nuevo lead Meta</td><td>Enviar plantilla bienvenida</td></tr>
+                        <tr><td><strong>Follow-up 1</strong></td><td>Sin respuesta 2-4h</td><td>Mensaje suave</td></tr>
+                        <tr><td><strong>Follow-up 2</strong></td><td>Sin respuesta 24h</td><td>Técnica "1 o 2"</td></tr>
+                        <tr><td><strong>Follow-up 3</strong></td><td>Sin respuesta 3-5 días</td><td>Mensaje empático</td></tr>
+                        <tr><td><strong>Follow-up 4</strong></td><td>Sin respuesta 7-10 días</td><td>Último contacto</td></tr>
+                        <tr><td><strong>Reminder 1</strong></td><td>Cita -24h</td><td>Recordatorio + confirmación</td></tr>
+                        <tr><td><strong>Reminder 2</strong></td><td>Cita -2h</td><td>Recordatorio final</td></tr>
+                        <tr><td><strong>Post-visit 1</strong></td><td>Visita +24-48h</td><td>Check-up</td></tr>
+                        <tr><td><strong>Post-visit 2</strong></td><td>Visita +1-2 sem</td><td>Resultado</td></tr>
+                        <tr><td><strong>Reactivation</strong></td><td>Visita +1-3 meses</td><td>Soft touch</td></tr>
+                        <tr><td><strong>Novelty hook</strong></td><td>Visita +3-6 meses</td><td>Novedad relevante</td></tr>
+                        <tr><td><strong>Gratitude</strong></td><td>Visita +6 meses</td><td>Agradecimiento</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✅</span>
+        <span class="toast-text" id="toastText">Copiado al portapapeles</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
