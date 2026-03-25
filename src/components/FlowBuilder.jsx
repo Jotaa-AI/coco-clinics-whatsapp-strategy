@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import ReactFlow, { 
   Background, 
   Controls, 
@@ -18,8 +18,12 @@ const nodeTypes = {
 };
 
 const FlowBuilder = () => {
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, addNode, importFlow } = useFlowStore();
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, addNode, importFlow, initFlow, isLoading } = useFlowStore();
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    initFlow();
+  }, [initFlow]);
   
   const handleAddNode = () => {
     const newNode = {
@@ -87,6 +91,17 @@ const FlowBuilder = () => {
     }
   }));
 
+  if (isLoading) {
+    return (
+      <div className="w-full h-full flex items-center justify-center pt-16">
+        <div className="text-accent-teal font-semibold animate-pulse flex flex-col items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-t-2 border-accent-purple animate-spin"></div>
+          Cargando flujo...
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-full flex pt-16">
       <div className="flex-1 h-full relative">
@@ -103,7 +118,7 @@ const FlowBuilder = () => {
           <Background color="#6C63FF" gap={20} size={1} opacity={0.1} />
           <Controls showInteractive={false} className="bg-bg-card fill-white border-border-color" />
           <MiniMap 
-            nodeColor={(node) => '#6C63FF'}
+            nodeColor={() => '#6C63FF'}
             maskColor="rgba(10, 10, 26, 0.7)"
             className="bg-bg-secondary border border-border-color rounded-xl"
           />
@@ -148,8 +163,10 @@ const FlowBuilder = () => {
   );
 };
 
-export default () => (
+const FlowApp = () => (
   <ReactFlowProvider>
     <FlowBuilder />
   </ReactFlowProvider>
 );
+
+export default FlowApp;

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { addEdge, applyNodeChanges, applyEdgeChanges } from 'reactflow';
+import { supabase } from '../lib/supabase';
 
 const initialNodes = [
   // 1. Bienvenida
@@ -252,46 +253,86 @@ const initialEdges = [
   { id: 'e-back-2', source: 'seg_24h', target: 'fase_conexion', animated: true, style: { stroke: '#95E1D3', strokeDasharray: '5,5', opacity: 0.5 } },
 ];
 
+let saveTimeout;
+const saveToSupabase = (nodes, edges) => {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(async () => {
+    try {
+      await supabase.from('flow_state').upsert({
+        id: 'default',
+        nodes,
+        edges,
+        updated_at: new Date().toISOString()
+      });
+    } catch (err) {
+      console.error('Error saving to Supabase:', err);
+    }
+  }, 1000);
+};
+
 export const useFlowStore = create((set, get) => ({
   nodes: initialNodes,
   edges: initialEdges,
+  isLoading: true,
+  
+  initFlow: async () => {
+    try {
+      set({ isLoading: true });
+      const { data } = await supabase
+        .from('flow_state')
+        .select('*')
+        .eq('id', 'default')
+        .single();
+        
+      if (data && data.nodes && data.nodes.length > 0) {
+        set({ nodes: data.nodes, edges: data.edges });
+      }
+    } catch (err) {
+      console.error('Error fetching from Supabase:', err);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
   
   onNodesChange: (changes) => {
-    set({
-      nodes: applyNodeChanges(changes, get().nodes),
-    });
+    const newNodes = applyNodeChanges(changes, get().nodes);
+    set({ nodes: newNodes });
+    saveToSupabase(newNodes, get().edges);
   },
   
   onEdgesChange: (changes) => {
-    set({
-      edges: applyEdgeChanges(changes, get().edges),
-    });
+    const newEdges = applyEdgeChanges(changes, get().edges);
+    set({ edges: newEdges });
+    saveToSupabase(get().nodes, newEdges);
   },
   
   onConnect: (connection) => {
-    set({
-      edges: addEdge({ ...connection, animated: true, style: { stroke: '#4ECDC4' } }, get().edges),
-    });
+    const newEdges = addEdge({ ...connection, animated: true, style: { stroke: '#4ECDC4' } }, get().edges);
+    set({ edges: newEdges });
+    saveToSupabase(get().nodes, newEdges);
   },
   
   updateNodeData: (nodeId, data) => {
-    set({
-      nodes: get().nodes.map((node) => {
-        if (node.id === nodeId) {
-          return { ...node, data: { ...node.data, ...data } };
-        }
-        return node;
-      }),
+    const newNodes = get().nodes.map((node) => {
+      if (node.id === nodeId) {
+        return { ...node, data: { ...node.data, ...data } };
+      }
+      return node;
     });
+    set({ nodes: newNodes });
+    saveToSupabase(newNodes, get().edges);
   },
   
   addNode: (node) => {
-    set({ nodes: [...get().nodes, node] });
+    const newNodes = [...get().nodes, node];
+    set({ nodes: newNodes });
+    saveToSupabase(newNodes, get().edges);
   },
 
   importFlow: (flowData) => {
     if (flowData.nodes && flowData.edges) {
       set({ nodes: flowData.nodes, edges: flowData.edges });
+      saveToSupabase(flowData.nodes, flowData.edges);
     }
   }
 }));

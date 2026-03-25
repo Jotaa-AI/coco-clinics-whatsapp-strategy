@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'reactflow';
-import { GitBranch, Edit2, Check, Trash2 } from 'lucide-react';
+import { GitBranch, Edit2, Check } from 'lucide-react';
 
 const ConditionNode = ({ data, id }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -15,10 +15,7 @@ const ConditionNode = ({ data, id }) => {
     setIsEditing(false);
   };
 
-  const deleteNode = () => {
-    // We would need a delete custom function in the store, but for now we rely on React Flow's selected Backspace.
-    // So this button is more of a placeholder, or we can add deleteNode to flowStore.
-  };
+
 
   const getThemeStyles = (theme) => {
     switch(theme) {
