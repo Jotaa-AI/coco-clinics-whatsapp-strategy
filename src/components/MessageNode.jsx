@@ -5,8 +5,17 @@ import { useFlowStore } from '../store/flowStore';
 
 const MessageNode = ({ data, id }) => {
   const updateNodeData = useFlowStore(state => state.updateNodeData);
+  const addChildNode = useFlowStore(state => state.addChildNode);
   const [editingIndex, setEditingIndex] = useState(null);
   const [tempText, setTempText] = useState('');
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [tempTitle, setTempTitle] = useState(data.title || 'Nueva Fase');
+  const [showAddMenu, setShowAddMenu] = useState(false);
+
+  const onAddChild = (type) => {
+    addChildNode(id, type);
+    setShowAddMenu(false);
+  };
 
   const handleEdit = (index, text) => {
     setEditingIndex(index);
@@ -18,6 +27,16 @@ const MessageNode = ({ data, id }) => {
     newMessages[index] = tempText;
     updateNodeData(id, { messages: newMessages });
     setEditingIndex(null);
+  };
+
+  const handleEditTitle = () => {
+    setTempTitle(data.title || 'Nueva Fase');
+    setIsEditingTitle(true);
+  };
+
+  const saveTitle = () => {
+    updateNodeData(id, { title: tempTitle });
+    setIsEditingTitle(false);
   };
 
   const addMessage = () => {
@@ -59,10 +78,38 @@ const MessageNode = ({ data, id }) => {
     <div className={`glass-card w-[320px] shadow-xl ${getThemeStyles(data.theme)}`}>
       <Handle type="target" position={Position.Top} className="!w-3 !h-3 !bg-accent-teal" />
       
-      <div className="p-4 border-b border-white/10 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="p-4 border-b border-white/10 flex items-center justify-between group">
+        <div className="flex items-center gap-2 w-full">
           <MessageSquare size={18} className={getHeaderColor(data.theme)} />
-          <h3 className="font-bold text-white text-sm">{data.title || 'Nueva Fase'}</h3>
+          {isEditingTitle ? (
+            <div className="flex w-full gap-2 items-center">
+              <input 
+                type="text"
+                className="w-full bg-black/40 border border-white/20 rounded px-2 py-1 text-sm text-white outline-none"
+                value={tempTitle}
+                onChange={(e) => setTempTitle(e.target.value)}
+                autoFocus
+              />
+              <button 
+                onClick={saveTitle} 
+                className="p-1.5 bg-black/40 rounded hover:bg-white/20 transition-colors"
+                title="Guardar Título"
+              >
+                <Check size={14} className={getHeaderColor(data.theme)} />
+              </button>
+            </div>
+          ) : (
+            <div 
+              className="flex items-center gap-2 w-full justify-between cursor-pointer group/title"
+              onClick={handleEditTitle}
+              title="Haz clic para editar título"
+            >
+              <h3 className="font-bold text-white text-sm group-hover/title:text-accent-pink transition-colors">
+                {data.title || 'Nueva Fase'}
+              </h3>
+              <Edit2 size={12} className="text-gray-400 opacity-0 group-hover/title:opacity-100 transition-opacity" />
+            </div>
+          )}
         </div>
       </div>
 
@@ -150,6 +197,30 @@ const MessageNode = ({ data, id }) => {
             <span className="text-gray-500 ml-1">%</span>
           </div>
         </div>
+      </div>
+
+      <div className="bg-black/40 p-2 flex justify-center border-t border-white/10 relative">
+        <button 
+          onClick={() => setShowAddMenu(!showAddMenu)}
+          className="w-8 h-8 rounded-full bg-accent-purple/20 flex items-center justify-center text-accent-purple border border-accent-purple/50 hover:bg-accent-purple/40 transition-colors shadow-lg"
+          title="Añadir nodo conectado"
+        >
+          <Plus size={16} />
+        </button>
+        
+        {showAddMenu && (
+          <div className="absolute top-12 left-1/2 -translate-x-1/2 bg-[#111128] border border-white/20 rounded-xl p-2 shadow-2xl flex flex-col gap-1 z-50 min-w-[140px]">
+            <button onClick={() => onAddChild('messageNode')} className="px-3 py-1.5 text-xs text-white hover:bg-accent-purple/30 rounded-lg text-left transition-colors">
+              + Mensaje
+            </button>
+            <button onClick={() => onAddChild('conditionNode')} className="px-3 py-1.5 text-xs text-white hover:bg-accent-yellow/30 rounded-lg text-left transition-colors">
+              + Condición
+            </button>
+            <button onClick={() => onAddChild('stageNode')} className="px-3 py-1.5 text-xs text-white hover:bg-accent-pink/30 rounded-lg text-left transition-colors">
+              + Etapa
+            </button>
+          </div>
+        )}
       </div>
 
       <Handle type="source" position={Position.Bottom} className="!w-3 !h-3 !bg-accent-purple" />

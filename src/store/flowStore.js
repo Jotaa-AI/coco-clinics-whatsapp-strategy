@@ -335,5 +335,67 @@ export const useFlowStore = create((set, get) => ({
       set({ nodes: flowData.nodes, edges: flowData.edges });
       saveToSupabase();
     }
+  },
+
+  addChildNode: (parentId, nodeType, sourceHandle = null) => {
+    const state = get();
+    const parentNode = state.nodes.find(n => n.id === parentId);
+    if (!parentNode) return;
+
+    const newNodeId = `node_${Date.now()}`;
+    
+    let newX = parentNode.position.x;
+    let newY = parentNode.position.y + 250;
+    
+    if (sourceHandle === 'yes') newX -= 150;
+    if (sourceHandle === 'no') newX += 150;
+    
+    let newNode = {
+      id: newNodeId,
+      type: nodeType,
+      position: { x: newX, y: newY },
+      data: {}
+    };
+
+    if (nodeType === 'messageNode') {
+      newNode.data = {
+        title: 'Nueva Fase',
+        messages: ['Escribe tu mensaje...'],
+        metrics: { read: 0, replied: 0, appointment: 0 },
+        theme: 'default'
+      };
+    } else if (nodeType === 'conditionNode') {
+      newNode.data = {
+        condition: '¿Nueva Condición?',
+        theme: 'default'
+      };
+    } else if (nodeType === 'stageNode') {
+      newNode.data = {
+        title: 'Nueva Etapa',
+        theme: 'default'
+      };
+    }
+
+    const newEdgeId = `e-${parentId}-to-${newNodeId}-${Date.now()}`;
+    const newEdge = {
+      id: newEdgeId,
+      source: parentId,
+      target: newNodeId,
+      sourceHandle: sourceHandle || undefined,
+      animated: true,
+      style: { stroke: '#4ECDC4' }
+    };
+
+    if (sourceHandle === 'yes') {
+      newEdge.style = { stroke: '#95E1D3', strokeWidth: 2 };
+    } else if (sourceHandle === 'no') {
+      newEdge.style = { stroke: '#F38181', strokeWidth: 2, strokeDasharray: '5,5' };
+    }
+
+    const newNodes = [...state.nodes, newNode];
+    const newEdges = [...state.edges, newEdge];
+    
+    set({ nodes: newNodes, edges: newEdges });
+    saveToSupabase();
   }
 }));
